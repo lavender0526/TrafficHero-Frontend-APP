@@ -34,7 +34,7 @@ class _MyWidgetState extends State<homePage> {
     home(),
     cms(),
     group(),
-    traficInfor(),
+    trafficInfor(),
     setting(),
   ];
 
@@ -51,8 +51,6 @@ class _MyWidgetState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Navbar(),
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(46, 117, 182, 1),
         elevation: 0,
