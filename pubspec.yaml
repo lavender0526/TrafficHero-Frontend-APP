@@ -52,6 +52,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  uses-material-design: true
   assets:
     - assets/img/cat.png
     - assets/img/location.png
@@ -64,11 +65,14 @@ flutter:
     - assets/imgGroup/enter.png
     - assets/imgGroup/voice.png
     - assets/imgGroup/gps.png
+    - assets/imgSetting/locationSet.png
+    - assets/imgSetting/personSet.png
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
-  uses-material-design: true
+
 
   # To add assets to your application, add an assets section, like this:
 

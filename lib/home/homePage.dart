@@ -67,6 +67,7 @@ class _MyWidgetState extends State<homePage> {
         },
       ),
       body: currentPage,
+      backgroundColor: Color.fromRGBO(187, 214, 239, 0.5),
     );
   }
 }
