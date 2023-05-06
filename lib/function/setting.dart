@@ -9,19 +9,36 @@ class setting extends StatefulWidget {
   @override
   State<setting> createState() => _setting();
 }
-
-class setCheckBox{
-    bool selected;
-    String text;
-    setCheckBox(this.text,this.selected);
+class Step {
+  Step(
+      this.img,
+      this.title,
+      [this.isExpanded = false]
+      );
+  String img;
+  String title;
+  bool isExpanded;
 }
-class openState{
-  openState([this.isOpen=false]);
-  bool isOpen;
+//在這擴增設定
+List<Step> getPersonSet() {
+  return [
+    Step('assets/imgSetting/personSet.png','個人化推播設定'),
+  ];
+}
+List<Step> getLocationSet() {
+  return [
+    Step('assets/imgSetting/locationSet.png','快速地點設定'),
+  ];
+}
+class setCheckBox{
+  bool selected;
+  String text;
+  setCheckBox(this.text,this.selected);
 }
 
 class _setting extends State<setting> {
-  final List<openState> _openState=[];
+  final List<Step> _getPersonSet = getPersonSet();
+  final List<Step> _getLocationSet = getLocationSet();
   List<setCheckBox> personSet =[];
   List<setCheckBox> locationSet =[];
 
@@ -103,64 +120,73 @@ class _setting extends State<setting> {
               ),
             ),
             SizedBox(height: 10,),
-            Container(
-                // child:ListView.builder(
-                //     itemBuilder: (BuildContext context, int index){
-                //       return ExpansionPanelList (
-                //         expansionCallback: (int index, bool isExpanded) {
-                //           setState(() {
-                //             _openState[index].isOpen = !isExpanded;
-                //           });
-                //         },
-                //         animationDuration: Duration(milliseconds:1000),
-                //         dividerColor:Colors.red,
-                //         elevation:1,
-                //         children:
-                //         // children : [
-                //         //   ExpansionPanel (
-                //         //     headerBuilder: (BuildContext context, bool isExpanded) {
-                //         //       return ListTile(
-                //         //         title: Text('個人化推播設定'),
-                //         //       );
-                //         //     },
-                //         //     body: ListTile(
-                //         //       title: Text('test'),
-                //         //     ),
-                //         //     // Column(
-                //         //     //   children:
-                //         //     //   personSet.map((e) {
-                //         //     //     return _personSet(e);
-                //         //     //   }).toList(),
-                //         //     // ),
-                //         //     canTapOnHeader: true,
-                //         //     isExpanded: isOpen,
-                //         //   ),
-                //         //   // ExpansionPanel (
-                //         //   //   headerBuilder: (BuildContext context, bool isExpanded) {
-                //         //   //     return ListTile(
-                //         //   //       title: Text('快速地點設定'),
-                //         //   //     );
-                //         //   //   },
-                //         //   //   body: Column(
-                //         //   //     children:
-                //         //   //     locationSet.map((e) {
-                //         //   //       return _locationSet(e);
-                //         //   //     }).toList(),
-                //         //   //   ),
-                //         //   //   isExpanded: isOpen,
-                //         //   // ),
-                //         // ],
-                //       );
-                //     }
-                // )
-            )
-
-
+            Column(
+                children:[
+                  _setPerson(),
+                  _setlocation(),
+                ]
+            ),
               ],
             )
               );
   }
-
+  Widget _setPerson() {//個人化推播設定
+    return ExpansionPanelList(
+      expansionCallback: (int index, bool isExpanded) {
+        setState(() {
+          _getPersonSet[index].isExpanded = !isExpanded;
+        });
+      },
+      children: _getPersonSet.map<ExpansionPanel>((Step step) {
+        return ExpansionPanel(
+          backgroundColor: Color.fromRGBO(221,235,247,1),
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return ListTile(
+              title: Text(step.title,style: TextStyle(fontSize: 20),),
+              leading: Image.asset(step.img,width: 40,),
+            );
+          },
+          body: Column(
+            children:
+            personSet.map((e) {
+              return _personSet(e);
+            }).toList(),
+          ),
+          canTapOnHeader: true,
+          isExpanded: step.isExpanded,
+        );
+      }).toList(),
+    );
+  }
+  Widget _setlocation() {//快速地點設定
+    return ExpansionPanelList(
+      expansionCallback: (int index, bool isExpanded) {
+        setState(() {
+          _getLocationSet[index].isExpanded = !isExpanded;
+        });
+      },
+      children: _getLocationSet.map<ExpansionPanel>((Step step) {
+        return ExpansionPanel(
+          backgroundColor: Color.fromRGBO(221,235,247,1),
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return ListTile(
+              title: Text(step.title,style: TextStyle(fontSize: 20),),
+              leading: Image.asset(step.img,width: 40,),
+            );
+          },
+          body: Column(
+            children:
+            locationSet.map((e) {
+              return _locationSet(e);
+            }).toList(),
+          ),
+          canTapOnHeader: true,
+          isExpanded: step.isExpanded,
+        );
+      }).toList(),
+    );
+  }
+  //checkbox設置
   Widget _personSet(setCheckBox s){
     return Row(
       children: [
@@ -171,7 +197,7 @@ class _setting extends State<setting> {
               setState(() {});
             },
         ),
-        Text(s.text),
+        Text(s.text,style: TextStyle(fontSize: 20),),
       ],
     );
   }
@@ -185,7 +211,7 @@ class _setting extends State<setting> {
             setState(() {});
           },
         ),
-        Text(s.text),
+        Text(s.text,style: TextStyle(fontSize: 20),),
       ],
     );
   }
